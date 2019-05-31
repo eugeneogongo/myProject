@@ -5,10 +5,12 @@
             <div class="media-body">
                 <div>
                     <p>This is a list of the files you just uploaded, click on them to load/download them</p>
+ 
+                   {% for data in result%}
+                    <li>{{data.plotname}}</li>
+                    <img src="{{url_for('static',filename = 'photos/'+data.images)}}" alt="">
+                    {% endfor %}
                   
-                  
-                   <li>{{house.plotname}}</li>
-                   <img src="{{images}}" alt="">
                   
                   
                  </div>

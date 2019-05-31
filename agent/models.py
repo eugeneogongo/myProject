@@ -38,9 +38,16 @@ class users(db.Model, UserMixin):
 
 class update_site(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    plotname = db.Column(db.String(20), unique = True, nullable = False)
+    plotname = db.Column(db.String(20), nullable = False)
     images = db.Column(db.String, nullable = False, default = 'default.jpg')
 
     def __repr__(self):
         return f"('{self.plotname}','{self.images}',)"
 
+class upload(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    plotname = db.Column(db.String(20), nullable = False)
+    images = db.Column(db.String, nullable = False, default = 'default.jpg')
+
+    def __repr__(self):
+        return f"('{self.plotname}','{self.images}',)"

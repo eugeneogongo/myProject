@@ -1,7 +1,6 @@
-from agent.models import users, update_site
+from agent.models import users, upload
 from agent import app, db, bcrypt, APP_ROOT,destination, mail
-from flask import render_template,flash,redirect, url_for, request,send_from_directory
-from data import Products
+from flask import render_template,flash,redirect, url_for, request, send_file
 from agent.forms import RegistrationForm, LoginForm, UploadForm, RequestResetForm, ResetPasswordForm
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug import secure_filename
@@ -30,14 +29,19 @@ def save_image(form_image):
     return image_fn
 
 
+
 @app.route('/home', methods = ['GET'])
 @login_required
 def home():
-    house = update_site.query.first()
-    images = os.path.join(app.root_path, 'static/photos'+ house.images)
-    return render_template('home.html', images = images, house = house)
-    #pics = os.listdir(destination)  
+    session = db.session()
+    result = session.query(upload).all()
+    #house = upload.query.get(6)
+    #plot = house.plotname
+    #images = url_for('static',filename = 'photos/'+result.images)
+    return render_template('home.html',result = result)
+    #pics = os.listdir(destination)
     #return render_template('home.html',pics=pics)
+    
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -80,7 +84,7 @@ def update():
     if form.validate_on_submit():
         if form.image.data:
             photo = save_image(form.image.data) 
-        plot = update_site(plotname = form.plotname.data, images = photo)
+        plot = upload(plotname = form.plotname.data, images = photo)
         db.session.add(plot)
         db.session.commit()
         flash('data added successifilly', 'success')
