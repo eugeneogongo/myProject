@@ -1,15 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField,SelectField, DecimalField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from agent.models import users
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username',
+    firstName = StringField('First name',
+                             validators = [DataRequired(), Length(min = 2, max = 20)])
+    lastName = StringField('Last name',
                              validators = [DataRequired(), Length(min = 2, max = 20)])
 
     email = StringField('Email',
                             validators = [DataRequired(), Email()])
+    phoneNumber = StringField('Phone number',
+                             validators = [DataRequired(), Length(min = 2, max = 20)])
 
     password =  PasswordField('Password', 
                                 validators = [DataRequired()])
@@ -41,9 +45,19 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')                       
 
 class UploadForm(FlaskForm):
+    category = SelectField(choices=[('Single room','Single room'), ('Bed sitter','Bed sitter'),
+                                ('One bedroom','One bedroom'),('Two bedroom','Two bedroom'),
+                                ('Three bedroom','Three bedroom')])
     plotname = StringField('Plotname',
                              validators = [DataRequired(), Length(min = 2, max = 20)])
-    image = FileField(validators=[FileAllowed(['jpg','png']), FileRequired(u'File was empty!')])
+    estate = StringField('Estate',
+                             validators = [DataRequired(), Length(min = 2, max = 20)])
+    roomNumber = StringField('Room number',
+                             validators = [DataRequired(), Length(min = 2, max = 20)])
+    price = DecimalField('Price',
+                          places=2, validators = [DataRequired()])
+    image = FileField(validators=[FileAllowed(['jpg','png','jpeg']), FileRequired(u'File was empty!')])
+    description = TextAreaField('Description')
     submit = SubmitField(u'Upload')
 
 class RequestResetForm(FlaskForm):

@@ -16,8 +16,10 @@ def load_user(user_id):
 
 class users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(20), unique = True, nullable = False)
+    firstName = db.Column(db.String(20), unique = True, nullable = False)
+    lastName = db.Column(db.String(20), unique = True, nullable = False)
     email = db.Column(db.String(20), unique = True, nullable = False)
+    phoneNumber = db.Column(db.String(15), unique = True, nullable = False)
     image_file = db.Column(db.String(20), nullable = False, default = 'default.jpg')
     password = db.Column(db.String(60), nullable = False)
 
@@ -36,10 +38,16 @@ class users(db.Model, UserMixin):
             return None
         return users.query.get(user_id)
 
-class upload(db.Model):
+
+class uploader(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    category = db.Column(db.String(20), nullable = False)
     plotname = db.Column(db.String(20), nullable = False)
+    estate = db.Column(db.String(20), nullable = False)
+    roomNumber = db.Column(db.String(10), nullable = False)
+    price = db.Column(db.DECIMAL(5,2), nullable = False)
     images = db.Column(db.String, nullable = False, default = 'default.jpg')
+    description = db.Column(db.String(300), nullable = False)
 
     def __repr__(self):
         return f"('{self.plotname}','{self.images}',)"

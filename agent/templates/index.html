@@ -1,12 +1,21 @@
-{% extends 'layout2.html' %}
-
-{% block content %}
-
-<div class="starter-template">
-        <h1>welcome to master agent</h1>
-        <p><a class="ml-2" href="{{url_for('login')}}">Login</a></p>
-        <p>or</p>
-        <p><a class="ml-2" href="{{url_for('register')}}">Register</a></p>
-      </div>
-    
-{% endblock %}
+<html>
+  <head>
+    <title>Index page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href={{url_for('static', filename='css/style.css')}} type="text/css" >
+  </head>
+  <body>
+      <div class="login-register">
+          <a class="ml-2" href="{{url_for('login')}}">Login</a>
+          <a class="ml-2" href="{{url_for('register')}}">Register</a>
+        </div>
+        <div class="blank">
+        
+        </div>
+        <div class="index-text">
+          <h2>Master Agent</h2>
+          <p>Book a house with a click of a button</p>
+          <p>try us and register with us</p>
+        </div>
+  </body>
+</html>

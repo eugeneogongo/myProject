@@ -1,4 +1,4 @@
-from agent.models import users, upload
+from agent.models import users, uploader
 from agent import app, db, bcrypt, APP_ROOT,destination, mail
 from flask import render_template,flash,redirect, url_for, request, send_file
 from agent.forms import RegistrationForm, LoginForm, UploadForm, RequestResetForm, ResetPasswordForm
@@ -8,6 +8,7 @@ from flask_wtf.file import FileAllowed
 from flask_mail import Message
 import os
 import secrets
+from PIL import Image
 
 
 @app.route('/')
@@ -25,7 +26,10 @@ def save_image(form_image):
     _, f_ext = os.path.splitext(form_image.filename)
     image_fn = random_hex + f_ext
     image_path = os.path.join(app.root_path, 'static/photos', image_fn)
-    form_image.save(image_path) 
+    output_size = (200, 200)
+    i = Image.open(form_image)
+    i.thumbnail(output_size)
+    i.save(image_path) 
     return image_fn
 
 
@@ -33,12 +37,13 @@ def save_image(form_image):
 @app.route('/home', methods = ['GET'])
 @login_required
 def home():
+    form = UploadForm()
     session = db.session()
-    result = session.query(upload).all()
+    result = session.query(uploader).all()
     #house = upload.query.get(6)
     #plot = house.plotname
     #images = url_for('static',filename = 'photos/'+result.images)
-    return render_template('home.html',result = result)
+    return render_template('home.html',result = result, form = form)
     #pics = os.listdir(destination)
     #return render_template('home.html',pics=pics)
     
@@ -48,7 +53,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = users(username = form.username.data, email = form.email.data, password = hashed_password)
+        user = users(firstName = form.firstName.data, lastName = form.lastName.data,
+                             email = form.email.data, phoneNumber = form.phoneNumber.data, password = hashed_password)
         db.session.add(user)
         db.session.commit()
         flash('Account created for you please login!!', 'success')
@@ -60,12 +66,14 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = users.query.filter_by(email = form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user is None:
+            flash('The user does not exist!! register first', 'danger')
+        elif user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember= form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login unsuccessiful please check email and password!', 'danger')
+            flash('wrong password!', 'danger')
     return render_template('login.html', form = form)
 
 @app.route('/logout')
@@ -84,7 +92,9 @@ def update():
     if form.validate_on_submit():
         if form.image.data:
             photo = save_image(form.image.data) 
-        plot = upload(plotname = form.plotname.data, images = photo)
+        plot = uploader(category = form.category.data, plotname = form.plotname.data,
+                                estate = form.estate.data, roomNumber = form.roomNumber.data, price = form.price.data, images = photo,
+                                description = form.description.data)
         db.session.add(plot)
         db.session.commit()
         flash('data added successifilly', 'success')
@@ -93,13 +103,12 @@ def update():
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    msg = Message('Reset password request', sender='joseymahugu@gmail.com', recipients=[user.email])
+    msg = Message('Reset password request', sender='josehmahugu@gmail.com', recipients=[user.email])
     msg.body = f''' To reset your password, visit the following link
-{url_for('reset_token', token = token, external = True)}
+{url_for('reset_token', token = token, _external = True)}
 If you did nor request this email ignore and no changes will be made
 '''
-    with app.app_context():
-        mail.send(msg)
+    mail.send(msg)
 
 @app.route('/reset_password', methods = ['GET', 'POST'])
 def request_reset():
@@ -117,11 +126,11 @@ def request_reset():
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    user = user.veryfy_reset_token(token)
+    user = users.verify_reset_token(token)
     if user is None:
         flash('The token is invalid or has expired','warning')
         return redirect(url_for('request_reset'))
-    form = RersetPasswordForm()
+    form = ResetPasswordForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user.password = hashed_password

@@ -1,18 +1,35 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="upload" style="border-radius: 15px;
-height: 550px;
-width: 350px;
-position: relative;
-overflow: hidden;
-background-color:rgb(213, 237, 238);
-box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);">
+<div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages%}
+            <div class="alert alert-{{ category }}">
+                    {{ message }}                
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <div class="content-section">
         <form method="POST" action="" enctype="multipart/form-data">
             {{form.hidden_tag()}}
             <fieldset class="form-group">
                 <legend class="border-bottom mb4" style="align-content: center">upload data</legend>
+                <div class="form-group">
+                    {{form.category.label(class = "form-control-label")}}
+                    {% if form.category.errors %}
+                    {{form.category(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.category.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.category(class = "form-control form-control-lg")}}
+                    {% endif %}
+                    
+                </div>
                 <div class="form-group">
                     {{form.plotname.label(class = "form-control-label")}}
                     {% if form.plotname.errors %}
@@ -27,16 +44,77 @@ box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);">
                     {% endif %}
                     
                 </div>
-
-                        <div class="form-group">
-                            {{form.image.label()}}
-                            {{form.image(class = "form-control-file")}}
-                            {% if form.image.errors %}
-                                {% for error in form.image.errors %}
-                                    <span class="text-danger">{{ error }}</span><br>
-                                {% endfor %}
-                            {% endif%}
+                <div class="form-group">
+                        {{form.estate.label(class = "form-control-label")}}
+                        {% if form.estate.errors %}
+                        {{form.estate(class = "form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.estate.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
                         </div>
+                        {% else %}
+                        {{form.estate(class = "form-control form-control-lg")}}
+                        {% endif %}
+                        
+                    </div>
+
+                <div class="form-group">
+                    {{form.roomNumber.label(class = "form-control-label")}}
+                    {% if form.roomNumber.errors %}
+                    {{form.roomNumber(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.roomNumber.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.roomNumber(class = "form-control form-control-lg")}}
+                    {% endif %}
+                    
+                </div>
+
+                <div class="form-group">
+                    {{form.price.label(class = "form-control-label")}}
+                    {% if form.price.errors %}
+                    {{form.price(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.price.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.price(class = "form-control form-control-lg")}}
+                    {% endif %}
+                    
+                </div>
+
+
+                <div class="form-group">
+                    {{form.image.label()}}
+                    {{form.image(class = "form-control-file")}}
+                    {% if form.image.errors %}
+                        {% for error in form.image.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                    {% endif%}
+                </div>
+                
+                <div class="form-group">
+                    {{form.description.label(class = "form-control-label")}}
+                    {% if form.description.errors %}
+                    {{form.description(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.description(class = "form-control form-control-lg")}}
+                    {% endif %}
+                    
+                </div>
+
                        
             </fieldset>
                         <div class="form-group">

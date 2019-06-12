@@ -7,16 +7,31 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb4" style="align-content: center">Join today</legend>
                 <div class="form-group">
-                    {{form.username.label(class = "form-control-label")}}
-                    {% if form.username.errors %}
-                    {{form.username(class = "form-control form-control-lg is-invalid")}}
+                    {{form.firstName.label(class = "form-control-label")}}
+                    {% if form.firstName.errors %}
+                    {{form.firstName(class = "form-control form-control-lg is-invalid")}}
                     <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
+                        {% for error in form.firstName.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{form.username(class = "form-control form-control-lg")}}
+                    {{form.firstName(class = "form-control form-control-lg")}}
+                    {% endif %}
+                    
+                </div>
+
+                <div class="form-group">
+                    {{form.lastName.label(class = "form-control-label")}}
+                    {% if form.lastName.errors %}
+                    {{form.lastName(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.lastName.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.lastName(class = "form-control form-control-lg")}}
                     {% endif %}
                     
                 </div>
@@ -33,6 +48,21 @@
                         {{form.email(class = "form-control form-control-lg")}}
                         {% endif %}
                     </div>
+                
+                <div class="form-group">
+                    {{form.phoneNumber.label(class = "form-control-label")}}
+                    {% if form.phoneNumber.errors %}
+                    {{form.phoneNumber(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.phoneNumber.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.phoneNumber(class = "form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+
                 <div class="form-group">
                         {{form.password.label(class = "form-control-label")}}
                         {% if form.password.errors %}
