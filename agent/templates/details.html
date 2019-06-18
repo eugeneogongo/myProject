@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content%}
+<div>
+<div class="content-section">
+    {% for data in detail %}
+    <div class="image-view">
+         <img src="{{url_for('static',filename = 'photos/'+data.image)}}" width="430" height="400" alt="">
+
+         <div class="price">
+             <h4>Kshs {{data.price}}</h4>
+        </div>
+    </div>
+    <div class="location-view">
+    <div class="map">
+        <h1>Flask Google Maps Example</h1><hr>
+        
+</div>
+    <button class="book">Book house</button>
+    </div>
+    
+
+    <div class="details-view">
+       <h6>Available {{data.category}} house located at {{data.estate}} estate</h6>
+       <h6>Plot name: {{data.plotname}}</h6>
+       <h6>Vacant room: {{data.roomNumber}}</h6>
+       <p><h6>{{data.description}}</h6></p>
+
+    </div>
+    {% endfor %}
+ </div>
+ </div>
+{% endblock %}

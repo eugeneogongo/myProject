@@ -7,13 +7,18 @@ from werkzeug.utils import secure_filename
 import os
 from flask_admin import Admin
 from flask_mail import Mail
+from flask_googlemaps import GoogleMaps 
 
 app = Flask(__name__)
 
+# you can set key as config
+app.config['GOOGLEMAPS_KEY'] = "8JZ7i18MjFuM35dJHq70n3Hx4"
+
+# Initialize the extension
+googleMaps = GoogleMaps(app)
 # set optional bootswatch theme
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-
-admin = Admin(app, name='microblog', template_mode='bootstrap3')
+admin = Admin(app, name='Master Agent', template_mode='bootstrap3')
 # Add administrative views here
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))

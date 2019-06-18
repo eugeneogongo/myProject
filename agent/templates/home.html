@@ -20,9 +20,9 @@
      </div>
      <div class="home">
         {% for data in result%}
-        <a href="#"> <div class="upload">
+        <a href="{{ url_for('houseDetails', house_id = data.id) }}"> <div class="upload">
             <div class="image">
-                <img src="{{url_for('static',filename = 'photos/'+data.images)}}" width="220" height="200" alt="">
+                <img src="{{url_for('static',filename = 'photos/'+data.image)}}" width="220" height="200" alt="">
             </div>
             <div class="details">
                 <h2>Ksh {{data.price}}</h2>

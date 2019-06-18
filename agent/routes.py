@@ -1,5 +1,5 @@
-from agent.models import users, uploader
-from agent import app, db, bcrypt, APP_ROOT,destination, mail
+from agent.models import users, Uploader, Images
+from agent import app, db, bcrypt, APP_ROOT,destination, mail, login_manager
 from flask import render_template,flash,redirect, url_for, request, send_file
 from agent.forms import RegistrationForm, LoginForm, UploadForm, RequestResetForm, ResetPasswordForm
 from flask_login import login_user, current_user, logout_user, login_required
@@ -11,11 +11,17 @@ import secrets
 from PIL import Image
 
 
+
 @app.route('/')
 def index():
-   
     return render_template('index.html') 
 
+@login_required
+@app.route('/admin/')
+def admin_login():
+    if not current_user.is_authenticated():
+        return redirect('/login/')
+        
 @app.route('/about')
 @login_required
 def about():
@@ -26,7 +32,7 @@ def save_image(form_image):
     _, f_ext = os.path.splitext(form_image.filename)
     image_fn = random_hex + f_ext
     image_path = os.path.join(app.root_path, 'static/photos', image_fn)
-    output_size = (200, 200)
+    output_size = (500, 500)
     i = Image.open(form_image)
     i.thumbnail(output_size)
     i.save(image_path) 
@@ -39,14 +45,21 @@ def save_image(form_image):
 def home():
     form = UploadForm()
     session = db.session()
-    result = session.query(uploader).all()
+    result = session.query(Uploader).all()
+    img = session.query(Images).all()
     #house = upload.query.get(6)
     #plot = house.plotname
     #images = url_for('static',filename = 'photos/'+result.images)
-    return render_template('home.html',result = result, form = form)
+    return render_template('home.html',result = result, img = img, form = form)
     #pics = os.listdir(destination)
     #return render_template('home.html',pics=pics)
-    
+
+@app.route('/details', methods = ['GET'])
+@login_required
+def houseDetails():
+    house_id = request.args.get('house_id',None)
+    detail = Uploader.query.filter_by(id = house_id)
+    return render_template('details.html', detail = detail)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -87,16 +100,27 @@ def profile():
     return render_template('profile.html')
 
 @app.route('/update', methods = ['GET', 'POST'])
+@login_required
 def update():
+    session = db.session()
     form = UploadForm()
     if form.validate_on_submit():
         if form.image.data:
-            photo = save_image(form.image.data) 
-        plot = uploader(category = form.category.data, plotname = form.plotname.data,
-                                estate = form.estate.data, roomNumber = form.roomNumber.data, price = form.price.data, images = photo,
-                                description = form.description.data)
-        db.session.add(plot)
-        db.session.commit()
+            photo = save_image(form.image.data)
+            plot = Uploader(category = form.category.data, plotname = form.plotname.data,
+                                estate = form.estate.data, roomNumber = form.roomNumber.data,
+                                 price = form.price.data,
+                                description = form.description.data, image = photo)
+            db.session.add(plot)
+            db.session.commit()
+        """ u = Uploader.query.all()
+        upload = str(u[-1].id)
+        p = form.image.data
+        for pic in p:
+            photo = save_image(p)
+            foto = Images(image = photo, uploader_id = upload)
+            db.session.add(foto)
+            db.session.commit() """
         flash('data added successifilly', 'success')
         return redirect(url_for('update'))
     return render_template('upload.html', form = form)

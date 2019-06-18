@@ -51,12 +51,13 @@ class UploadForm(FlaskForm):
     plotname = StringField('Plotname',
                              validators = [DataRequired(), Length(min = 2, max = 20)])
     estate = StringField('Estate',
-                             validators = [DataRequired(), Length(min = 2, max = 20)])
+                             validators = [DataRequired(), Length(min = 1, max = 20)])
     roomNumber = StringField('Room number',
                              validators = [DataRequired(), Length(min = 2, max = 20)])
     price = DecimalField('Price',
                           places=2, validators = [DataRequired()])
-    image = FileField(validators=[FileAllowed(['jpg','png','jpeg']), FileRequired(u'File was empty!')])
+    image = FileField(render_kw={'multiple': True}, validators=[FileAllowed(['jpg','png','jpeg']),
+                                         FileRequired(u'File was empty!')])
     description = TextAreaField('Description')
     submit = SubmitField(u'Upload')
 

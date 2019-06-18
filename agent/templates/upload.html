@@ -92,7 +92,7 @@
 
                 <div class="form-group">
                     {{form.image.label()}}
-                    {{form.image(class = "form-control-file")}}
+                    {{form.image(class = "form-control-file", multiple="multiple")}}
                     {% if form.image.errors %}
                         {% for error in form.image.errors %}
                             <span class="text-danger">{{ error }}</span><br>
