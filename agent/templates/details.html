@@ -1,32 +1,32 @@
 {% extends 'layout.html' %}
 {% block content%}
-<div>
-<div class="content-section">
-    {% for data in detail %}
-    <div class="image-view">
-         <img src="{{url_for('static',filename = 'photos/'+data.image)}}" width="430" height="400" alt="">
-
-         <div class="price">
-             <h4>Kshs {{data.price}}</h4>
+    <div class="container">
+        <div class="row">
+         {% for data in detail %}
+            <div class="col-md-7">
+               
+                    <div class="col-md-12">
+                        {% for img in data.images%}
+                        <img class="img-thumbnail img-fluid center-block" src="{{url_for('static',filename = 'photos/'+img.image)}}">
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                        <h1>{{data.category}} house</h1>
+                        <h5>Located at {{data.estate}}</h5>
+                        <h6>Apartment: {{data.plotname}} room number {{data.roomNumber}}</h6>
+                        <p> {{data.description}} </p>
+                        <h2 class="text-center text-success"><i class="fa fa-dollar"></i> Ksh {{data.price}} </h2>
+                    </div>
+            </div>
+            <div class="col-md-5" style="height:400px;">
+              <div class="location-view">
+                <div onload="initMap()" id="map" class="map">
+                   
+            </div>
+                <a href="{{url_for('add_profile', house_id = data.id)}}"><button class="book">Book house</button></a>
+                </div>
+            </div>
+        {% endfor %}
         </div>
     </div>
-    <div class="location-view">
-    <div class="map">
-        <h1>Flask Google Maps Example</h1><hr>
-        
-</div>
-    <button class="book">Book house</button>
-    </div>
-    
-
-    <div class="details-view">
-       <h6>Available {{data.category}} house located at {{data.estate}} estate</h6>
-       <h6>Plot name: {{data.plotname}}</h6>
-       <h6>Vacant room: {{data.roomNumber}}</h6>
-       <p><h6>{{data.description}}</h6></p>
-
-    </div>
-    {% endfor %}
- </div>
- </div>
-{% endblock %}
+{% endblock %}  

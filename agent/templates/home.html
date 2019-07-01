@@ -19,18 +19,23 @@
 
      </div>
      <div class="home">
-        {% for data in result%}
-        <a href="{{ url_for('houseDetails', house_id = data.id) }}"> <div class="upload">
+        {% for data in imagesList%}
+        {% if not data.is_booked %}
+        <a href="{{ url_for('houseDetails', house_id = data.id) }}"> 
+            <div class="upload">
             <div class="image">
-                <img src="{{url_for('static',filename = 'photos/'+data.image)}}" width="220" height="200" alt="">
+                {% for img in data.images %}
+                <img src="{{url_for('static',filename = 'photos/'+img.image)}}" width="276" height="200" alt="">
+                {% endfor %}
             </div>
             <div class="details">
-                <h2>Ksh {{data.price}}</h2>
+                <h4>Ksh {{data.price}}</h4>
                 <h6>Vacant {{data.category}} | {{data.estate}}  </h6>
             </div>
 
             </div>
         </a>
+        {% endif %}
         {% endfor %}
     </div>
  </div>

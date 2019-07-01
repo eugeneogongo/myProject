@@ -1,4 +1,4 @@
-from agent.models import users, Uploader, Images
+from agent.models import users, Uploader, Images, Profile, Profile_images
 from agent import app, db, bcrypt, APP_ROOT,destination, mail, login_manager
 from flask import render_template,flash,redirect, url_for, request, send_file
 from agent.forms import RegistrationForm, LoginForm, UploadForm, RequestResetForm, ResetPasswordForm
@@ -45,21 +45,41 @@ def save_image(form_image):
 def home():
     form = UploadForm()
     session = db.session()
-    result = session.query(Uploader).all()
-    img = session.query(Images).all()
-    #house = upload.query.get(6)
-    #plot = house.plotname
-    #images = url_for('static',filename = 'photos/'+result.images)
-    return render_template('home.html',result = result, img = img, form = form)
-    #pics = os.listdir(destination)
-    #return render_template('home.html',pics=pics)
+    imagesList = session.query(Uploader).all()
+    return render_template('home.html',
+                imagesList = imagesList, form = form)
 
 @app.route('/details', methods = ['GET'])
 @login_required
 def houseDetails():
     house_id = request.args.get('house_id',None)
     detail = Uploader.query.filter_by(id = house_id)
-    return render_template('details.html', detail = detail)
+    #query from related tables
+    google_key = os.environ.get('key')#google api key
+    return render_template('details.html', google_key = google_key, detail = detail)
+
+@app.route('/addprofile')
+@login_required
+def add_profile():
+    house_id = request.args.get('house_id',None)
+    details = Uploader.query.filter_by(id = house_id)
+    for detail in details:
+        profile = Profile(category = detail.category, plotname = detail.plotname,
+                                    estate = detail.estate, roomNumber = detail.roomNumber,
+                                    price = detail.price,
+                                    description = detail.description, user_id = current_user.id)
+        db.session.add(profile)
+        db.session.commit()
+        for data in detail.images:
+            d = Profile.query.all()
+            prof_id = d[-1].id
+            profile_images = Profile_images(image = data.image, profile_id = prof_id)
+            db.session.add(profile_images)
+            db.session.commit()
+        details.is_booked = True
+        db.session.commit()
+    flash('welcome '+ current_user.firstName + 'to' + detail.plotname + 'Appatments','seccess')
+    return redirect(url_for('profile'))
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -95,35 +115,40 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/profile')
-#@login_required
+@login_required
 def profile():
-    return render_template('profile.html')
+    info = Profile.query.filter_by(user_id = current_user.id)
+    return render_template('profile.html', info = info)
 
 @app.route('/update', methods = ['GET', 'POST'])
 @login_required
 def update():
+    if not current_user.is_staff:
+        return redirect(url_for('home'))
     session = db.session()
     form = UploadForm()
+    u = Images.query.all()
+    upload = u[-1].image
+    
     if form.validate_on_submit():
         if form.image.data:
             photo = save_image(form.image.data)
             plot = Uploader(category = form.category.data, plotname = form.plotname.data,
                                 estate = form.estate.data, roomNumber = form.roomNumber.data,
                                  price = form.price.data,
-                                description = form.description.data, image = photo)
+                                description = form.description.data)
             db.session.add(plot)
             db.session.commit()
-        """ u = Uploader.query.all()
-        upload = str(u[-1].id)
-        p = form.image.data
-        for pic in p:
-            photo = save_image(p)
-            foto = Images(image = photo, uploader_id = upload)
+        
+            d = Uploader.query.all()
+            uploadid = d[-1].id 
+            photo = save_image(form.image.data)
+            foto = Images(image = photo, uploader_id = uploadid)
             db.session.add(foto)
-            db.session.commit() """
+            db.session.commit()
         flash('data added successifilly', 'success')
         return redirect(url_for('update'))
-    return render_template('upload.html', form = form)
+    return render_template('upload.html', upload = upload, form = form)
 
 def send_reset_email(user):
     token = user.get_reset_token()

@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master agent</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href={{url_for('static', filename='css/style.css')}} type="text/css" >
-    <script type="text/javascript" src= {{url_for('static', filename='js/script.css')}}></script>
+    <link rel="stylesheet" href={{url_for('static', filename='css/assets/styles.min.css')}} type="text/css" >
+    <script src= {{url_for('static', filename='js/script.css')}} type="text/javascript"></script>
 </head>
 <body>
     
         
         
-    <div class="container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages%}
-                    <div class="alert alert-{{ category }}">
-                            {{ message }}                
-                    </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+    <div class="">
     {% block content %}
        
     {% endblock %}
