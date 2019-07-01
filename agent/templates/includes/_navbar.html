@@ -1,46 +1,32 @@
- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-   <nav>
-      <a class="navbar-brand" href="#">Master Agent</a>
-   </nav>
-  
-  <div class="collapse navbar-collapse" id="navbars">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{url_for('home')}}">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url_for('about')}}">About<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="#">Maps<span class="sr-only">(current)</span></a>
-      </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url_for('profile')}}">Profile<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{url_for('update')}}">Update<span class="sr-only">(current)</span></a>
-    </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-            <ul class="navbar-nav mr-auto">
-                   
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{url_for('profile')}}">{{current_user.firstName}}<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{url_for('logout')}}">Logout<span class="sr-only">(current)</span></a>
-                    </li>
-          
-                    {% else %}
-                    <li class="nav-item active">
-                      <a class="nav-link" href="{{url_for('login')}}">Login<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('register')}}">Sign up<span class="sr-only">(current)</span></a>
-                    </li>
-                    {% endif %}
-            </ul>
-    </form>
-  </div>
+<nav class="navbar fixed-top">
+<div class="collapse navbar-collapse" id='cssmenu'>
+<ul>
+   <li class='al active'><a href='{{url_for("home")}}'>Master Agent </a></li>
+   <li class="al"><a href='{{url_for("home")}}'>Home</a></li>
+   <li class="al"><a href="{{url_for('about')}}">About</a></li>
+   <li class="al"><a href="{{url_for('profile')}}">Profile</a></li>     
+   <li class="al"><a href="#">Map</a></li> 
+   {% if current_user.is_staff %}
+   <li class="al"><a href="{{url_for('update')}}">Update</a></li>
+   {% endif %}         
+        {% if current_user.is_authenticated %}
+        <li class="right">
+            <a class="nav-link" href="{{url_for('logout')}}">Logout<span class="sr-only"></span></a>
+        </li>
+        
+        <li class="right nav-item">
+            <a href="{{url_for('profile')}}">Welcome {{current_user.firstName}}</a>
+        </li>
+
+        {% else %}
+        <li class="right nav-item">
+          <a class="nav-link" href="{{url_for('login')}}">Login<span class="sr-only"></span></a>
+        </li>
+        <li class="right nav-item">
+          <a class="nav-link" href="{{url_for('register')}}">Sign up<span class="sr-only"></span></a>
+        </li>
+        {% endif %}
+</ul>
+</div>
 </nav>
+

@@ -1,21 +1,23 @@
-<html>
-  <head>
-    <title>Index page</title>
+<!DOCTYPE html>
+<html style="height:600px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>master agent</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href={{url_for('static', filename='css/style.css')}} type="text/css" >
-  </head>
-  <body>
-      <div class="login-register">
-          <a class="ml-2" href="{{url_for('login')}}">Login</a>
-          <a class="ml-2" href="{{url_for('register')}}">Register</a>
+    <link rel="stylesheet" href={{url_for('static', filename='css/assets/styles.min.css')}} type="text/css" >
+</head>
+
+<body>     
+        <div class="jumbotron hero-technology" style="background-image:url(&quot;static/photos/img/IMG_169451190444804.jpeg&quot;);margin-top:20px;">
+            <h1 class="hero-title">Master Agent</h1>
+            <p class="hero-subtitle">For convenience in finding rental houses around your prefered areas, pleadse try us</p>
+            <p><a class="btn btn-primary btn-lg hero-button" role="button" href="{{url_for('login')}}" style="margin-right:30px;background-color:rgb(71,234,244);">Login</a>
+                <a class="btn btn-primary btn-lg hero-button" role="button" href="{{url_for('register')}}" style="background-color:rgb(71,234,244);">Register</a></p>
         </div>
-        <div class="blank">
-        
-        </div>
-        <div class="index-text">
-          <h2>Master Agent</h2>
-          <p>Book a house with a click of a button</p>
-          <p>try us and register with us</p>
-        </div>
-  </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

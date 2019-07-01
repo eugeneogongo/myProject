@@ -1,21 +1,15 @@
-{% extends 'layout.html' %}
 
-{% block content %}
-<div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages%}
-            <div class="alert alert-{{ category }}">
-                    {{ message }}                
+{% extends 'layout.html' %}
+{% block content%}
+    <div class="register-photo">
+        <div class="form-container">
+            <div class="image-holder" style="background-image:url(&quot;static/photos/{{upload}}&quot;);">
+            <p class="hero-subtitle">Last uploaded vacant house</p>
             </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <div class="content-section">
-        <form method="POST" action="" enctype="multipart/form-data">
-            {{form.hidden_tag()}}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb4" style="align-content: center">upload data</legend>
+            <form method="POST" action="" enctype="multipart/form-data">
+                    {{form.hidden_tag()}}
+                    {% include 'includes/_message.html' %}
+                <h2 class="text-center"><strong>Add</strong> a vacant house.</h2>
                 <div class="form-group">
                     {{form.category.label(class = "form-control-label")}}
                     {% if form.category.errors %}
@@ -28,8 +22,8 @@
                     {% else %}
                     {{form.category(class = "form-control form-control-lg")}}
                     {% endif %}
-                    
                 </div>
+
                 <div class="form-group">
                     {{form.plotname.label(class = "form-control-label")}}
                     {% if form.plotname.errors %}
@@ -42,23 +36,22 @@
                     {% else %}
                     {{form.plotname(class = "form-control form-control-lg")}}
                     {% endif %}
-                    
                 </div>
-                <div class="form-group">
-                        {{form.estate.label(class = "form-control-label")}}
-                        {% if form.estate.errors %}
-                        {{form.estate(class = "form-control form-control-lg is-invalid")}}
-                        <div class="invalid-feedback">
-                            {% for error in form.estate.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                        {% else %}
-                        {{form.estate(class = "form-control form-control-lg")}}
-                        {% endif %}
-                        
-                    </div>
 
+                <div class="form-group">
+                    {{form.estate.label(class = "form-control-label")}}
+                    {% if form.estate.errors %}
+                    {{form.estate(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.estate.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.estate(class = "form-control form-control-lg")}}
+                    {% endif %}
+                    </div> 
+                    
                 <div class="form-group">
                     {{form.roomNumber.label(class = "form-control-label")}}
                     {% if form.roomNumber.errors %}
@@ -71,7 +64,6 @@
                     {% else %}
                     {{form.roomNumber(class = "form-control form-control-lg")}}
                     {% endif %}
-                    
                 </div>
 
                 <div class="form-group">
@@ -86,9 +78,7 @@
                     {% else %}
                     {{form.price(class = "form-control form-control-lg")}}
                     {% endif %}
-                    
                 </div>
-
 
                 <div class="form-group">
                     {{form.image.label()}}
@@ -99,7 +89,7 @@
                         {% endfor %}
                     {% endif%}
                 </div>
-                
+
                 <div class="form-group">
                     {{form.description.label(class = "form-control-label")}}
                     {% if form.description.errors %}
@@ -110,19 +100,14 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{form.description(class = "form-control form-control-lg")}}
+                    {{form.description(class = "form-control form-control-lg", placeholder = "Room description...")}}
                     {% endif %}
                     
                 </div>
-
-                       
-            </fieldset>
-                        <div class="form-group">
-                            {{form.submit(class="btn btn-outline-info")}}
-                        </div>
-                       
-        </form>
-
+                <div class="form-group">
+                    {{form.submit(class="btn btn-primary btn-block", style="background-color:rgb(71,234,244);")}}
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-   {% endblock %}
+{% endblock %}

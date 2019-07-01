@@ -1,32 +1,21 @@
-
+.navbar{
+  margin-top: 0%;
+  margin-bottom: 10px;
+}
 .container{
-    border-radius: 15px;
-    height: auto;
-    width: 400px;
-    position: relative;
-    overflow: hidden;
-    background-color:#C1F7F1;
-    box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
-    padding-bottom: 10px;
+  padding-left: 10px;
+}
+.row{
+  width: 800px;
+  margin-left: 0%;
+}
+.col-md-7{
+  margin-left: 0%;
 }
 body{
-    background-color: #ffffff;
+    background-color: #f7f9fc;
 }
-.login-register{
-    height: auto;
-    width: auto;
-   margin-right: 20px;
-    text-align: right;
-}
-.blank{
-    width: auto;
-    height: 450px;
-}
-.index-text{
-    height: auto;
-    width: auto;
-    text-align: left;
-}
+
 .filter{
     height: 400px;
     width: 200px;
@@ -42,7 +31,12 @@ body{
     margin-right: 10px;
     margin-bottom: 10px;
     border: 1px;
-    border-style: dashed;
+    background-color:#fff;
+    border:1px solid #dbe3e7;
+    border-radius:3px;
+    box-shadow:1px 3px 1px rgba(0,0,0,.08);
+
+    
 }
 .image{
     margin-bottom: 10px;
@@ -50,11 +44,12 @@ body{
     width: auto;
     position: relative;
     align-content: center;
-    padding:0px 10px 0px 20px;
 }
 .details{
     margin-bottom: 0%;
     height: 80px;
+    align-content: center;
+    color: grey;
 
 }
 .dropbtn {
@@ -64,6 +59,8 @@ body{
     font-size: 16px;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
+    width: 160px;
   }
   
   .dropbtn:hover, .dropbtn:focus {
@@ -78,7 +75,7 @@ body{
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     min-width: 160px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -89,7 +86,10 @@ body{
     color: black;
     padding: 12px 16px;
     text-decoration: none;
+    margin-bottom: 5px;
+    background-color: #f1f1f1;
     display: block;
+    border-radius: 5px;
   }
   
   .dropdown a:hover {background-color: #ddd;}
@@ -112,8 +112,11 @@ body{
     margin-right: 10px;
     margin-bottom: 20px;
     border: 1px;
-    border-style: dashed;
     align-content: center;
+    background-color:#fff;
+    border:1px solid #dbe3e7;
+    border-radius:3px;
+    box-shadow:1px 3px 1px rgba(0,0,0,.08);
   }
 
   .price{
@@ -127,32 +130,135 @@ body{
     margin-right: 10px;
     margin-left: 80px;
     margin-bottom: 10px;
-    margin-top: 30px;
+ 
     float: left;
     border: 1px;
-    border-style: dashed;
+    background-color:#fff;
+    border:1px solid #dbe3e7;
+    border-radius:3px;
+    box-shadow:1px 3px 1px rgba(0,0,0,.08);
   }
 
    .map{
     height: 500px;
-    width: 500px;
+    width: 600px;
     padding: 10px 10px 10px 10px;
     margin-bottom: 10px;
     border: 1px;
-    border-style: dashed;
   } 
-  
-  .details-view{
-    height: 300px;
-    width: 500px;
-    padding: 10px 10px 10px 10px;
-    margin-right: 10px;
-    margin-left: 30px;
-    float: left;
-    margin-bottom: 10px;
-    border: 1px;
-    border-style: dashed;
-    margin-top: 20px;
+
+  #map {
+    height: 100%;
+  }
+  div.col-md-7{
+    width: 200px;
+    
   }
 
+  nav img{
+    width: 100px;
+    height: 70px;
+    border-radius: 20px;
+  
   }
+
+  @import url(http://fonts.googleapis.com/css?family=Raleway);
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  line-height: 1;
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#cssmenu:after,
+#cssmenu > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#cssmenu {
+  width: auto;
+  border-bottom: 3px solid #47c9af;
+  font-family: Raleway, sans-serif;
+  line-height: 1;
+}
+#cssmenu ul {
+  background: #ffffff;
+}
+#cssmenu > ul > li.al {
+  float: left;
+}
+#cssmenu > ul > li.right {
+    float: right;
+}
+#cssmenu.align-center > ul {
+  font-size: 0;
+  text-align: center;
+}
+#cssmenu.align-center > ul > li {
+  display: inline-block;
+  float: none;
+}
+#cssmenu.align-right > ul > li {
+  float: right;
+}
+#cssmenu.align-right > ul > li > a {
+  margin-right: 0;
+  margin-left: -4px;
+}
+#cssmenu > ul > li > a {
+  z-index: 2;
+  padding: 18px 25px 12px 25px;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #444444;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  margin-right: -4px;
+}
+#cssmenu > ul > li.active > a,
+#cssmenu > ul > li:hover > a,
+#cssmenu > ul > li > a:hover {
+  color: #ffffff;
+}
+#cssmenu > ul > li > a:after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  width: 100%;
+  height: 120%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  content: "";
+  -webkit-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-transform: perspective(5px) rotateX(2deg);
+  -webkit-transform-origin: bottom;
+  -moz-transform: perspective(5px) rotateX(2deg);
+  -moz-transform-origin: bottom;
+  transform: perspective(5px) rotateX(2deg);
+  transform-origin: bottom;
+}
+#cssmenu > ul > li.active > a:after,
+#cssmenu > ul > li:hover > a:after,
+#cssmenu > ul > li > a:hover:after {
+  background: #47c9af;
+}

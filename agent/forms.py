@@ -53,10 +53,10 @@ class UploadForm(FlaskForm):
     estate = StringField('Estate',
                              validators = [DataRequired(), Length(min = 1, max = 20)])
     roomNumber = StringField('Room number',
-                             validators = [DataRequired(), Length(min = 2, max = 20)])
+                             validators = [DataRequired(), Length(min = 1, max = 20)])
     price = DecimalField('Price',
                           places=2, validators = [DataRequired()])
-    image = FileField(render_kw={'multiple': True}, validators=[FileAllowed(['jpg','png','jpeg']),
+    image = FileField(validators=[FileAllowed(['jpg','png','jpeg']),
                                          FileRequired(u'File was empty!')])
     description = TextAreaField('Description')
     submit = SubmitField(u'Upload')
@@ -67,9 +67,10 @@ class RequestResetForm(FlaskForm):
     submit = SubmitField('Request reset password')
 
     def validate_email(self, email):
-        user = users.query.filter_by(email = email.data).first()
-        if user is None:
-            raise ValidationError(' There is no account with that email, register first!!') 
+        
+            user = users.query.filter_by(email = email.data).first()
+            if user is None:
+                raise ValidationError(' There is no account with that email, register first!!') 
 
 class ResetPasswordForm(FlaskForm):
     password =  PasswordField('Password', 

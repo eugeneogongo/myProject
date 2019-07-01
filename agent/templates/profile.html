@@ -1,5 +1,30 @@
 {% extends 'layout.html' %}
+{% block content%}
+    <div class="container">
+        <div class="row">
+        
+            <div class="col-md-7">
+                <div class="col-md-12">
+                   {{current_user.firstName}} {{current_user.lastName}}
+                   {{current_user.email}}
+                   {{current_user.phoneNumber}}
 
-{% block content %}
-    <h2>{{current_user.firstName}}</h2>
-{% endblock %}
+                </div>
+                <div>
+                    Buttons
+                </div>
+               
+            </div>
+            <div class="col-md-5" style="height:400px;">
+              <div class="location-view">
+                {% for data in info %}
+                    {% for img in data.profile_images %}
+                <img class="img-thumbnail img-fluid center-block" src="{{url_for('static',filename = 'photos/'+img.image)}}">
+                    {% endfor%}
+                {% endfor %}
+            </div>
+            </div>
+        
+        </div>
+    </div>
+{% endblock %}  

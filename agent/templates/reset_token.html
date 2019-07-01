@@ -1,12 +1,12 @@
+
 {% extends 'layout2.html' %}
-
 {% block content %}
-    <div class="content-section">
+    <div class="login-card">
+        {% include 'includes/_message.html' %}
+        <p class="profile-name-card"> Master Agent </p>
         <form method="POST" action="">
-            {{form.hidden_tag()}}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb4">Reset password</legend>
-
+                {{form.hidden_tag()}}
+                
                 <div class="form-group">
                     {{form.password.label(class = "form-control-label")}}
                     {% if form.password.errors %}
@@ -17,32 +17,33 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{form.password(class = "form-control form-control-lg")}}
+                    {{form.password(class = "form-control form-control-l")}}
                     {% endif %}
                 </div>
-                <div class="form-group">
-                        {{form.confirm_password.label(class = "form-control-label")}}
-                        {% if form.confirm_password.errors %}
-                        {{form.confirm_password(class = "form-control form-control-lg is-invalid")}}
-                        <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                        {% else %}
-                        {{form.confirm_password(class = "form-control form-control-lg")}}
-                        {% endif %}
-                    </div>
-               
-                    </fieldset>
-                        <div class="form-group">
-                            {{form.submit(class="btn btn-outline-info")}}
-                        </div>
-                        <small class="text-muted ml-2">
-                                <a href="{{url_for('login')}}">Login</a>
-                            </small>
-           
-        </form>
 
-    </div>
+                <div class="form-group">
+                    {{form.confirm_password.label(class = "form-control-label")}}
+                    {% if form.confirm_password.errors %}
+                    {{form.confirm_password(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{form.confirm_password(class = "form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{form.submit(class="btn btn-primary btn-block btn-lg btn-signin", style="background-color:rgb(71,234,244);")}}
+                </div>
+        </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    <a class="ml-2" href="{{url_for('login')}}">Login</a>
+                </small>
+        
+            </div>
+     </div>
 {% endblock %}

@@ -1,35 +1,33 @@
+
 {% extends 'layout2.html' %}
-
 {% block content %}
-    <div class="content-section">
+    <div class="login-card">
+        {% include 'includes/_message.html' %}
+        <img src="static/photos/img/20035633.jpg" class="profile-img-card" style="background-image:url(&quot;static/photos/img/avatar_2x.png&quot;);">
+        <p class="profile-name-card"> Master Agent </p>
         <form method="POST" action="">
-            {{form.hidden_tag()}}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb4">Reset password</legend>
-
+                {{form.hidden_tag()}}
                 <div class="form-group">
-                        {{form.email.label(class = "form-control-label")}}
-                        {% if form.email.errors %}
-                        {{form.email(class = "form-control form-control-lg is-invalid")}}
-                        <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                        {% else %}
-                        {{form.email(class = "form-control form-control-lg")}}
-                        {% endif %}
+                    {% if form.email.errors %}
+                    {{form.email(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
                     </div>
-               
-                    </fieldset>
-                        <div class="form-group">
-                            {{form.submit(class="btn btn-outline-info")}}
-                        </div>
-                        <small class="text-muted ml-2">
-                                <a href="{{url_for('login')}}">Login</a>
-                            </small>
-           
+                    {% else %}
+                    {{form.email(class = "form-control form-control-lg", placeholder="Email")}}
+                    {% endif %}
+                </div>
+                
+                
+                <div class="form-group">
+                    {{form.submit(class="btn btn-primary btn-block btn-lg btn-signin", style="background-color:rgb(71,234,244);")}}
+                </div>
         </form>
 
-    </div>
+             <small class="text-muted ml-2">
+                <div class="border-top pt-3"><a href="{{ url_for('login')}}" style="color:rgb(25,32,204);">Login</a></div>
+            </small>
+          
 {% endblock %}
